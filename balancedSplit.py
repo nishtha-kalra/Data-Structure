@@ -17,20 +17,27 @@ output = false
 We can't split the array into A = [6, 6, 7] and B = [7, 12] since this doesn't satisfy the requirement that all integers in A are smaller than all integers in B.
 '''
 def balancedSplitExists(arr):
-  # Write your code here
-  arr.sort()
-  i = 0
-  j = 1
-  length = len(arr)
-  while j < length:
-    if (arr[i] != arr[j]):
-      left_arr = arr[:i+1]
-      right_arr = arr[j:length]
-      if sum(left_arr) == sum(right_arr):
-        return True
-    i += 1
-    j += 1
-  return False
+    # Step 1: Sort the array
+    arr.sort()
+    
+    # Step 2: Calculate the total sum of the array
+    total_sum = sum(arr)
+    
+    # If the total sum is odd, it's impossible to split into two equal sum parts
+    if total_sum % 2 != 0:
+        return False
+    
+    # Step 3: Iterate through the sorted array to find the partition point
+    left_sum = 0
+    for i in range(len(arr) - 1):
+        left_sum += arr[i]
+        right_sum = total_sum - left_sum
+        
+        # Check if left sum equals right sum and the partition condition
+        if left_sum == right_sum and arr[i] < arr[i + 1]:
+            return True
+    
+    return False
   
 # These are the tests we use to determine if the solution is correct.
 # You can add your own at the bottom.
